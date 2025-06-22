@@ -5,6 +5,9 @@ import com.kampai.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
+
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,9 +34,14 @@ public class EventController {
     }
 
     // 飲み会作成
+    // @PostMapping
+    // public Event createEvent(@RequestBody Event event) {
+    //     return eventRepository.save(event);
+    // }
     @PostMapping
-    public Event createEvent(@RequestBody Event event) {
-        return eventRepository.save(event);
+    public ResponseEntity<Event> createEvent(@Valid @RequestBody Event event) {
+        Event saved = eventRepository.save(event);
+        return ResponseEntity.ok(saved);
     }
 
     // 飲み会更新

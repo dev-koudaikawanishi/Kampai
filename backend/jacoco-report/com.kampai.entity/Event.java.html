@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Event.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Kampai</a> &gt; <a href="index.source.html" class="el_package">com.kampai.entity</a> &gt; <span class="el_source">Event.java</span></div><h1>Event.java</h1><pre class="source lang-java linenums">package com.kampai.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.FutureOrPresent;
+
+import java.time.LocalDate;
+
+
+@Entity
+<span class="fc" id="L18">public class Event {</span>
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotBlank(message = &quot;タイトルは必須です&quot;)
+    @Column(nullable = false)
+    private String title;
+
+    @NotNull(message = &quot;日付は必須です&quot;)
+    @FutureOrPresent(message = &quot;日付は今日以降にしてください&quot;)
+    @Column(nullable = false)
+    private LocalDate date;
+
+    @NotBlank(message = &quot;場所は必須です&quot;)
+    @Column(nullable = false)
+    private String location;
+
+    @NotNull(message = &quot;最大参加人数は必須です&quot;)
+    @Min(value = 1, message = &quot;最大参加人数は1人以上である必要があります&quot;)
+    @Column(nullable = false)
+    private Integer maxParticipants;
+
+    @NotNull(message = &quot;作成者IDは必須です&quot;)
+    @Column(nullable = false)
+    private Long createdBy;
+
+    // getter/setter
+
+<span class="fc" id="L48">    public Long getId() { return id; }</span>
+<span class="fc" id="L49">    public void setId(Long id) { this.id = id; }</span>
+
+<span class="fc" id="L51">    public String getTitle() { return title; }</span>
+<span class="fc" id="L52">    public void setTitle(String title) { this.title = title; }</span>
+
+<span class="fc" id="L54">    public LocalDate getDate() { return date; }</span>
+<span class="fc" id="L55">    public void setDate(LocalDate date) { this.date = date; }</span>
+
+<span class="fc" id="L57">    public String getLocation() { return location; }</span>
+<span class="fc" id="L58">    public void setLocation(String location) { this.location = location; }</span>
+
+<span class="fc" id="L60">    public Integer getMaxParticipants() { return maxParticipants; }</span>
+<span class="fc" id="L61">    public void setMaxParticipants(Integer maxParticipants) { this.maxParticipants = maxParticipants; }</span>
+
+<span class="fc" id="L63">    public Long getCreatedBy() { return createdBy; }</span>
+<span class="fc" id="L64">    public void setCreatedBy(Long createdBy) { this.createdBy = createdBy; }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

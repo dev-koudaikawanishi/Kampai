@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EventController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Kampai</a> &gt; <a href="index.source.html" class="el_package">com.kampai.controller</a> &gt; <span class="el_source">EventController.java</span></div><h1>EventController.java</h1><pre class="source lang-java linenums">package com.kampai.controller;
+
+import com.kampai.entity.Event;
+import com.kampai.repository.EventRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
+
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping(&quot;/api/events&quot;)
+<span class="fc" id="L17">public class EventController {</span>
+
+    @Autowired
+    private EventRepository eventRepository;
+
+    // 全飲み会取得
+    @GetMapping
+    public List&lt;Event&gt; getAllEvents() {
+<span class="fc" id="L25">        return eventRepository.findAll();</span>
+    }
+
+    // ID指定で飲み会取得
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Event&gt; getEventById(@PathVariable Long id) {
+<span class="fc" id="L31">        Optional&lt;Event&gt; event = eventRepository.findById(id);</span>
+<span class="fc" id="L32">        return event.map(ResponseEntity::ok)</span>
+<span class="fc" id="L33">                .orElse(ResponseEntity.notFound().build());</span>
+    }
+
+    // 飲み会作成
+    // @PostMapping
+    // public Event createEvent(@RequestBody Event event) {
+    //     return eventRepository.save(event);
+    // }
+    @PostMapping
+    public ResponseEntity&lt;Event&gt; createEvent(@Valid @RequestBody Event event) {
+<span class="fc" id="L43">        Event saved = eventRepository.save(event);</span>
+<span class="fc" id="L44">        return ResponseEntity.ok(saved);</span>
+    }
+
+    // 飲み会更新
+    @PutMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Event&gt; updateEvent(@PathVariable Long id, @RequestBody Event updatedEvent) {
+<span class="fc" id="L50">        return eventRepository.findById(id).map(event -&gt; {</span>
+<span class="fc" id="L51">            event.setTitle(updatedEvent.getTitle());</span>
+<span class="fc" id="L52">            event.setDate(updatedEvent.getDate());</span>
+<span class="fc" id="L53">            event.setLocation(updatedEvent.getLocation());</span>
+<span class="fc" id="L54">            event.setMaxParticipants(updatedEvent.getMaxParticipants());</span>
+<span class="fc" id="L55">            event.setCreatedBy(updatedEvent.getCreatedBy());</span>
+<span class="fc" id="L56">            Event saved = eventRepository.save(event);</span>
+<span class="fc" id="L57">            return ResponseEntity.ok(saved);</span>
+<span class="fc" id="L58">        }).orElse(ResponseEntity.notFound().build());</span>
+    }
+
+    // 飲み会削除
+    @DeleteMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Void&gt; deleteEvent(@PathVariable Long id) {
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        if (eventRepository.existsById(id)) {</span>
+<span class="fc" id="L65">            eventRepository.deleteById(id);</span>
+<span class="fc" id="L66">            return ResponseEntity.noContent().build();</span>
+        }
+<span class="fc" id="L68">        return ResponseEntity.notFound().build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

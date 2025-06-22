@@ -360,3 +360,16 @@ erDiagram
 > 備考：
 > モバイルファーストで設計（Tailwind CSS）
 > 色味は親しみやすい和風トーン（紺・山吹・白など）
+
+
+
+```
+docker-compose down -v
+docker-compose up --build
+
+docker exec -it backend-app-1 ./gradlew clean build
+docker exec -it backend-app-1 ./gradlew test jacocoTestReport
+rm -rf ./jacoco-report
+docker cp backend-app-1:/app/build/reports/jacoco/test/html ./jacoco-report
+
+```
