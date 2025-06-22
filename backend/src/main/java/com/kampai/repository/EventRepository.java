@@ -1,9 +1,9 @@
 package com.kampai.repository;
 
-import com.kampai.entity.Shop;
+import com.kampai.entity.Event;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ShopRepository extends JpaRepository<Shop, Long> {
+public interface EventRepository extends JpaRepository<Event, Long> {
 }
