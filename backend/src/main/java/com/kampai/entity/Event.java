@@ -13,7 +13,6 @@ import jakarta.validation.constraints.FutureOrPresent;
 
 import java.time.LocalDate;
 
-
 @Entity
 public class Event {
 
@@ -39,9 +38,9 @@ public class Event {
     @Column(nullable = false)
     private Integer maxParticipants;
 
-    @NotNull(message = "作成者IDは必須です")
-    @Column(nullable = false)
-    private Long createdBy;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User createdByUser;
 
     // getter/setter
 
@@ -60,6 +59,6 @@ public class Event {
     public Integer getMaxParticipants() { return maxParticipants; }
     public void setMaxParticipants(Integer maxParticipants) { this.maxParticipants = maxParticipants; }
 
-    public Long getCreatedBy() { return createdBy; }
-    public void setCreatedBy(Long createdBy) { this.createdBy = createdBy; }
+    public User getCreatedByUser() { return createdByUser; }
+    public void setCreatedByUser(User createdByUser) { this.createdByUser = createdByUser; }
 }
